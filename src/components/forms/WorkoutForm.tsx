@@ -7,6 +7,11 @@ import { CreateWorkoutData, Workout, WorkoutSet } from '@/types'
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { workoutValidation } from '@/lib/validations'
 
+// Form data type with string date for HTML input compatibility
+type WorkoutFormData = Omit<CreateWorkoutData, 'date'> & {
+  date: string
+}
+
 interface WorkoutFormProps {
   onWorkoutAdded: (workout: Workout) => void
   onCancel?: () => void
@@ -15,9 +20,9 @@ interface WorkoutFormProps {
 }
 
 function WorkoutForm({ onWorkoutAdded, onCancel, initialData, editingId }: WorkoutFormProps) {
-  const [formData, setFormData] = useState<CreateWorkoutData>({
+  const [formData, setFormData] = useState<WorkoutFormData>({
     exerciseName: initialData?.exerciseName || '',
-    date: initialData?.date?.toString().split('T')[0] || new Date().toISOString().split('T')[0],
+    date: initialData?.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
     sets: initialData?.sets || [{ reps: 8, weight: 0 }],
     notes: initialData?.notes || '',
   })
@@ -83,7 +88,7 @@ function WorkoutForm({ onWorkoutAdded, onCancel, initialData, editingId }: Worko
     }
   }
 
-  const handleInputChange = (field: keyof CreateWorkoutData, value: string | number | WorkoutSet[]) => {
+  const handleInputChange = (field: keyof WorkoutFormData, value: string | number | WorkoutSet[]) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
