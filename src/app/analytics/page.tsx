@@ -36,9 +36,13 @@ export default function AnalyticsPage() {
       if (response.ok) {
         const data = await response.json()
         setAnalyticsData(data)
+      } else {
+        console.error('Failed to fetch analytics:', response.status, response.statusText)
+        setAnalyticsData(null)
       }
     } catch (error) {
       console.error('Error fetching analytics:', error)
+      setAnalyticsData(null)
     } finally {
       setIsLoading(false)
     }
@@ -107,7 +111,15 @@ export default function AnalyticsPage() {
     )
   }
 
-  if (!analyticsData) {
+  // Check if analytics data is empty or unavailable
+  const hasNoData = !analyticsData || (
+    analyticsData.trends.length === 0 &&
+    analyticsData.achievements.length === 0 &&
+    analyticsData.personalRecords.length === 0 &&
+    analyticsData.summary.totalWeeks === 0
+  )
+
+  if (hasNoData) {
     return (
       <Layout>
         <div className="space-y-6">
@@ -126,6 +138,9 @@ export default function AnalyticsPage() {
               <ChartBarIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
               <p className="text-gray-500">Start logging workouts and nutrition to see your analytics!</p>
+              <div className="mt-4">
+                <p className="text-sm text-gray-400">Note: Analytics require a production database setup to function properly.</p>
+              </div>
             </div>
           </Card>
         </div>
