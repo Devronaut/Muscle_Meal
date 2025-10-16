@@ -6,6 +6,11 @@ import { Input } from '@/components/ui/Input'
 import { CreateNutritionData, Nutrition } from '@/types'
 import { nutritionValidation } from '@/lib/validations'
 
+// Form data type with string date for HTML input compatibility
+type NutritionFormData = Omit<CreateNutritionData, 'date'> & {
+  date: string
+}
+
 interface NutritionFormProps {
   onNutritionAdded: (nutrition: Nutrition) => void
   onCancel?: () => void
@@ -14,8 +19,8 @@ interface NutritionFormProps {
 }
 
 function NutritionForm({ onNutritionAdded, onCancel, initialData, editingId }: NutritionFormProps) {
-  const [formData, setFormData] = useState<CreateNutritionData>({
-    date: initialData?.date?.toString().split('T')[0] || new Date().toISOString().split('T')[0],
+  const [formData, setFormData] = useState<NutritionFormData>({
+    date: initialData?.date ? new Date(initialData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
     calories: initialData?.calories || 0,
     protein: initialData?.protein || 0,
     carbs: initialData?.carbs || 0,
@@ -86,7 +91,7 @@ function NutritionForm({ onNutritionAdded, onCancel, initialData, editingId }: N
     }
   }
 
-  const handleInputChange = (field: keyof CreateNutritionData, value: string | number) => {
+  const handleInputChange = (field: keyof NutritionFormData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
