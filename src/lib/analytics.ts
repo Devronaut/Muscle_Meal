@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/db'
 import { calculateWorkoutVolume } from '@/lib/utils'
+import { WorkoutSet } from '@/types'
 
 // Analytics interfaces
 export interface TrendData {
@@ -235,7 +236,7 @@ export async function getPersonalRecords(): Promise<PersonalRecord[]> {
     const current = exerciseRecords.get(exerciseName)!
     
     // Check for max weight
-    const maxWeight = Math.max(...sets.map(s => s.weight))
+    const maxWeight = Math.max(...sets.map((s: WorkoutSet) => s.weight))
     if (maxWeight > current.maxWeight) {
       current.maxWeight = maxWeight
       current.date = workout.date
@@ -249,7 +250,7 @@ export async function getPersonalRecords(): Promise<PersonalRecord[]> {
     }
     
     // Check for max reps
-    const maxReps = Math.max(...sets.map(s => s.reps))
+    const maxReps = Math.max(...sets.map((s: WorkoutSet) => s.reps))
     if (maxReps > current.maxReps) {
       current.maxReps = maxReps
       current.date = workout.date
