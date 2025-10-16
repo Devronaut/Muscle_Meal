@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Workout {
+  id           String   @id @default(cuid())
+  date         DateTime
+  exerciseName String
+  sets         String   // JSON string of Array of {reps: number, weight: number}
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("workouts")
+}
+
+model Nutrition {
+  id        String   @id @default(cuid())
+  date      DateTime
+  foodName  String?  // Optional food/meal name
+  calories  Int
+  protein   Float
+  carbs     Float
+  fats      Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("nutrition")
+}
+
+model Goal {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "Daily Nutrition Goals"
+  type        String   // "daily" or "weekly"
+  category    String   // "nutrition" or "workout"
+  calories    Int?     // Daily calorie goal
+  protein     Float?   // Daily protein goal (grams)
+  carbs       Float?   // Daily carbs goal (grams)
+  fats        Float?   // Daily fats goal (grams)
+  workouts    Int?     // Daily workout goal (number of workouts)
+  volume      Float?   // Daily workout volume goal (kg)
+  isActive    Boolean  @default(true)
+  startDate   DateTime @default(now())
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("goals")
+}
