@@ -75,7 +75,13 @@ export default function DashboardPage() {
         }
 
         // Create recent activity
-        const activities = []
+        const activities: Array<{
+          type: 'workout' | 'nutrition';
+          title: string;
+          description: string;
+          time: string;
+          icon: React.ReactElement;
+        }> = []
         
         // Add recent workouts
         workouts.slice(0, 3).forEach((workout: Workout) => {
