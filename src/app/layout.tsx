@@ -7,6 +7,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Muscle Meal',
   description: 'Personal fitness and nutrition tracking',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({

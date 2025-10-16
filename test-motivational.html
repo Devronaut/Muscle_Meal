@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Motivational Messages</title>
+</head>
+<body>
+    <h1>Motivational Messages Test</h1>
+    <div id="test-results"></div>
+
+    <script>
+        function getMotivationalMessage(progress) {
+            if (progress >= 100) {
+                return {
+                    message: "🎉 Amazing! You've crushed all your goals today! You're unstoppable!",
+                    emoji: "🏆",
+                    color: "text-green-600"
+                }
+            } else if (progress >= 90) {
+                return {
+                    message: "🔥 Incredible! You're so close to perfection! Just a little more push!",
+                    emoji: "💪",
+                    color: "text-green-500"
+                }
+            } else if (progress >= 75) {
+                return {
+                    message: "⭐ Fantastic! You're doing exceptionally well! Keep up the momentum!",
+                    emoji: "🚀",
+                    color: "text-blue-600"
+                }
+            } else if (progress >= 50) {
+                return {
+                    message: "👍 Great progress! You're halfway there! You've got this!",
+                    emoji: "🎯",
+                    color: "text-yellow-600"
+                }
+            } else if (progress >= 25) {
+                return {
+                    message: "💪 Good start! Every step counts. Keep building that momentum!",
+                    emoji: "🌱",
+                    color: "text-orange-600"
+                }
+            } else {
+                return {
+                    message: "🌟 Ready to make today count? Let's start your fitness journey!",
+                    emoji: "🚀",
+                    color: "text-gray-600"
+                }
+            }
+        }
+
+        // Test different progress levels
+        const testProgress = [0, 25, 50, 75, 90, 100];
+        const resultsDiv = document.getElementById('test-results');
+        
+        testProgress.forEach(progress => {
+            const motivational = getMotivationalMessage(progress);
+            const div = document.createElement('div');
+            div.style.margin = '10px 0';
+            div.style.padding = '10px';
+            div.style.border = '1px solid #ccc';
+            div.style.borderRadius = '5px';
+            div.innerHTML = `
+                <strong>Progress: ${progress}%</strong><br>
+                <span style="font-size: 24px;">${motivational.emoji}</span><br>
+                <span style="color: ${motivational.color.replace('text-', '').replace('-600', '').replace('-500', '')}">${motivational.message}</span>
+            `;
+            resultsDiv.appendChild(div);
+        });
+    </script>
+</body>
+</html>

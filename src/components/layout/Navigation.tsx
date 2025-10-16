@@ -11,7 +11,8 @@ import {
   Bars3Icon,
   XMarkIcon,
   CalendarDaysIcon,
-  FlagIcon
+  FlagIcon,
+  ChartPieIcon
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +21,7 @@ const navigation = [
   { name: 'Workouts', href: '/workouts', icon: FireIcon },
   { name: 'Nutrition', href: '/nutrition', icon: PlusIcon },
   { name: 'Progress', href: '/progress', icon: ChartBarIcon },
+  { name: 'Analytics', href: '/analytics', icon: ChartPieIcon },
   { name: 'History', href: '/history', icon: CalendarDaysIcon },
   { name: 'Goals', href: '/goals', icon: FlagIcon },
 ]

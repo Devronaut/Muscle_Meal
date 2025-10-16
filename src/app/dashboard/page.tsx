@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react'
 import Layout from '@/components/layout/Layout'
 import { Card, StatCard } from '@/components/ui/Card'
-import { FireIcon, PlusIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import { FireIcon, PlusIcon, ChartBarIcon, ArrowTrendingUpIcon, TrophyIcon } from '@heroicons/react/24/outline'
 import { Workout, Nutrition, GoalProgress } from '@/types'
-import { calculateWorkoutVolume, formatDateTime } from '@/lib/utils'
+import { calculateWorkoutVolume, formatDateTime, getMotivationalMessage, calculateOverallProgress } from '@/lib/utils'
 
 export default function DashboardPage() {
   const [todayStats, setTodayStats] = useState({
@@ -27,22 +27,30 @@ export default function DashboardPage() {
   
   const [isLoading, setIsLoading] = useState(true)
   const [goalProgress, setGoalProgress] = useState<GoalProgress[]>([])
+  const [analyticsInsights, setAnalyticsInsights] = useState<{
+    achievements: number
+    consistencyScore: number
+    bestDay: string
+    totalRecords: number
+  } | null>(null)
 
   const fetchTodayData = async () => {
     try {
-      const [statsResponse, workoutsResponse, nutritionResponse, goalsResponse] = await Promise.all([
+      const [statsResponse, workoutsResponse, nutritionResponse, goalsResponse, analyticsResponse] = await Promise.all([
         fetch('/api/stats'),
         fetch('/api/workouts'),
         fetch('/api/nutrition'),
-        fetch('/api/goals/progress')
+        fetch('/api/goals/progress'),
+        fetch('/api/analytics')
       ])
 
       if (statsResponse.ok && workoutsResponse.ok && nutritionResponse.ok && goalsResponse.ok) {
-        const [stats, workouts, nutrition, goals] = await Promise.all([
+        const [stats, workouts, nutrition, goals, analytics] = await Promise.all([
           statsResponse.json(),
           workoutsResponse.json(),
           nutritionResponse.json(),
-          goalsResponse.json()
+          goalsResponse.json(),
+          analyticsResponse.ok ? analyticsResponse.json() : Promise.resolve(null)
         ])
 
         setTodayStats({
@@ -55,6 +63,16 @@ export default function DashboardPage() {
         })
 
         setGoalProgress(goals)
+
+        // Set analytics insights
+        if (analytics) {
+          setAnalyticsInsights({
+            achievements: analytics.summary.totalAchievements,
+            consistencyScore: analytics.patterns.consistencyScore,
+            bestDay: analytics.patterns.bestDay,
+            totalRecords: analytics.summary.totalRecords
+          })
+        }
 
         // Create recent activity
         const activities = []
@@ -169,6 +187,102 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+
+        {/* Performance Insights */}
+        {!isLoading && goalProgress.length > 0 && (() => {
+          const overallProgress = calculateOverallProgress(goalProgress)
+          const motivational = getMotivationalMessage(overallProgress)
+          
+          return (
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Performance Insights</h2>
+              <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500">
+                <div className="flex items-center space-x-4">
+                  <div className="text-4xl">
+                    {motivational.emoji}
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-lg font-medium ${motivational.color}`}>
+                      {motivational.message}
+                    </p>
+                    <div className="mt-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-600">Overall Progress:</span>
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
+                            style={{ 
+                              width: `${Math.min(overallProgress, 100)}%` 
+                            }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700">
+                          {overallProgress.toFixed(0)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )
+        })()}
+
+        {/* Analytics Insights */}
+        {!isLoading && analyticsInsights && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Analytics Insights</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <Card className="border-l-4 border-blue-500">
+                <div className="flex items-center">
+                  <ArrowTrendingUpIcon className="h-8 w-8 text-blue-600 mr-3" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Consistency</p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {analyticsInsights.consistencyScore.toFixed(0)}%
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-l-4 border-green-500">
+                <div className="flex items-center">
+                  <TrophyIcon className="h-8 w-8 text-green-600 mr-3" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Achievements</p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {analyticsInsights.achievements}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-l-4 border-purple-500">
+                <div className="flex items-center">
+                  <ChartBarIcon className="h-8 w-8 text-purple-600 mr-3" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Personal Records</p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {analyticsInsights.totalRecords}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-l-4 border-orange-500">
+                <div className="flex items-center">
+                  <FireIcon className="h-8 w-8 text-orange-600 mr-3" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Best Day</p>
+                    <p className="text-lg font-bold text-gray-900">
+                      {analyticsInsights.bestDay}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        )}
 
         {/* Quick Actions */}
         <div>

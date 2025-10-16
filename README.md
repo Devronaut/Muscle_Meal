@@ -74,17 +74,12 @@ npm run db:generate
 npm run db:push
 ```
 
-4. (Optional) Seed with dummy data:
-```bash
-npm run db:seed
-```
-
-5. Start the development server:
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📱 Usage
 
@@ -128,12 +123,11 @@ The application uses three main models:
 - `npm run db:generate` - Generate Prisma client
 - `npm run db:push` - Push schema to database
 - `npm run db:studio` - Open Prisma Studio
-- `npm run db:seed` - Seed database with dummy data
 
 ## 📈 Future Enhancements
 
 - [ ] Dark mode toggle
-- [ ] Advanced analytics and insights
+- [x] Advanced analytics and insights ✅
 - [ ] Workout templates and exercise library
 - [ ] Food database integration
 - [ ] Mobile app (PWA)
