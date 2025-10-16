@@ -72,7 +72,7 @@ export function calculateWorkoutVolume(sets: Array<{reps: number, weight: number
   return sets.reduce((total, set) => total + (set.reps * set.weight), 0)
 }
 
-export function calculateOverallProgress(goalProgress: any[]): number {
+export function calculateOverallProgress(goalProgress: Array<{progress: Record<string, number>}>): number {
   if (!goalProgress || goalProgress.length === 0) return 0
   
   const progressValues = goalProgress.map(gp => {

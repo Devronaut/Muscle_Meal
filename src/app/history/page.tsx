@@ -105,18 +105,18 @@ export default function HistoryPage() {
         }
 
         daysInWeek.forEach(date => {
-          const dayNutrition = nutritionData.filter((n: any) => n.date.startsWith(date))
-          const dayWorkouts = workoutData.filter((w: any) => w.date.startsWith(date))
+          const dayNutrition = nutritionData.filter((n: Nutrition) => n.date.startsWith(date))
+          const dayWorkouts = workoutData.filter((w: Workout) => w.date.startsWith(date))
 
-          const dayCalories = dayNutrition.reduce((sum: number, n: any) => sum + n.calories, 0)
-          const dayProtein = dayNutrition.reduce((sum: number, n: any) => sum + n.protein, 0)
-          const dayCarbs = dayNutrition.reduce((sum: number, n: any) => sum + n.carbs, 0)
-          const dayFats = dayNutrition.reduce((sum: number, n: any) => sum + n.fats, 0)
+          const dayCalories = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.calories, 0)
+          const dayProtein = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.protein, 0)
+          const dayCarbs = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.carbs, 0)
+          const dayFats = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.fats, 0)
           
-          const dayWorkoutVolume = dayWorkouts.reduce((sum: number, w: any) => {
+          const dayWorkoutVolume = dayWorkouts.reduce((sum: number, w: Workout) => {
             // Handle both cases: sets as string (from DB) or as array (from API)
             const sets = typeof w.sets === 'string' ? JSON.parse(w.sets) : w.sets
-            return sum + sets.reduce((setSum: number, set: any) => setSum + (set.reps * set.weight), 0)
+            return sum + sets.reduce((setSum: number, set: {reps: number, weight: number}) => setSum + (set.reps * set.weight), 0)
           }, 0)
 
           totalCalories += dayCalories

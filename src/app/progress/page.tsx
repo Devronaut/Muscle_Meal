@@ -75,7 +75,7 @@ export default function ProgressPage() {
         // Calculate total volume for the day
         let totalVolume = 0
         if (workouts.length > 0) {
-          totalVolume = workouts.reduce((total: number, workout: any) => {
+          totalVolume = workouts.reduce((total: number, workout: Workout) => {
             const sets = JSON.parse(workout.sets)
             return total + sets.reduce((setTotal: number, set: {reps: number, weight: number}) => {
               return setTotal + (set.reps * set.weight)
@@ -134,7 +134,7 @@ export default function ProgressPage() {
           totalWorkouts += workouts.length
           workoutDays++
           
-          const dayVolume = workouts.reduce((dayTotal: number, workout: any) => {
+          const dayVolume = workouts.reduce((dayTotal: number, workout: Workout) => {
             const sets = JSON.parse(workout.sets)
             return dayTotal + sets.reduce((setTotal: number, set: {reps: number, weight: number}) => {
               return setTotal + (set.reps * set.weight)

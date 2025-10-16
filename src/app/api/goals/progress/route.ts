@@ -48,7 +48,7 @@ export async function GET(request: Request) {
       workouts: workoutEntries.length,
       volume: workoutEntries.reduce((sum, workout) => {
         const sets = JSON.parse(workout.sets as string)
-        return sum + sets.reduce((setSum: number, set: any) => setSum + (set.reps * set.weight), 0)
+        return sum + sets.reduce((setSum: number, set: {reps: number, weight: number}) => setSum + (set.reps * set.weight), 0)
       }, 0),
     }
 

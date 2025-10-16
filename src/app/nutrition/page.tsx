@@ -28,7 +28,7 @@ export default function NutritionPage() {
         setNutritionEntries(data)
         
         // Calculate totals
-        const newTotals = data.reduce((totals: any, entry: Nutrition) => ({
+        const newTotals = data.reduce((totals: {calories: number, protein: number, carbs: number, fats: number}, entry: Nutrition) => ({
           calories: totals.calories + entry.calories,
           protein: totals.protein + entry.protein,
           carbs: totals.carbs + entry.carbs,
