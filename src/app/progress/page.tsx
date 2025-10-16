@@ -77,7 +77,7 @@ export default function ProgressPage() {
         let totalVolume = 0
         if (workouts.length > 0) {
           totalVolume = workouts.reduce((total: number, workout: Workout) => {
-            const sets = JSON.parse(workout.sets)
+            const sets = typeof workout.sets === 'string' ? JSON.parse(workout.sets) : workout.sets
             return total + sets.reduce((setTotal: number, set: {reps: number, weight: number}) => {
               return setTotal + (set.reps * set.weight)
             }, 0)
@@ -136,7 +136,7 @@ export default function ProgressPage() {
           workoutDays++
           
           const dayVolume = workouts.reduce((dayTotal: number, workout: Workout) => {
-            const sets = JSON.parse(workout.sets)
+            const sets = typeof workout.sets === 'string' ? JSON.parse(workout.sets) : workout.sets
             return dayTotal + sets.reduce((setTotal: number, set: {reps: number, weight: number}) => {
               return setTotal + (set.reps * set.weight)
             }, 0)
