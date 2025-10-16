@@ -13,6 +13,7 @@ import {
   ChartBarIcon
 } from '@heroicons/react/24/outline'
 import { format, startOfWeek, endOfWeek, isSameWeek, subWeeks } from 'date-fns'
+import { Workout, Nutrition } from '@/types'
 
 interface DailyLog {
   date: string
