@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Card'
 import { ChartBarIcon } from '@heroicons/react/24/outline'
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
 import { format, subDays, startOfWeek, endOfWeek } from 'date-fns'
+import { Workout } from '@/types'
 
 interface WeeklyData {
   day: string
