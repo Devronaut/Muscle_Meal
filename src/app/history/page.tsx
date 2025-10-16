@@ -106,8 +106,8 @@ export default function HistoryPage() {
         }
 
         daysInWeek.forEach(date => {
-          const dayNutrition = nutritionData.filter((n: Nutrition) => n.date.startsWith(date))
-          const dayWorkouts = workoutData.filter((w: Workout) => w.date.startsWith(date))
+          const dayNutrition = nutritionData.filter((n: Nutrition) => new Date(n.date).toISOString().split('T')[0] === date)
+          const dayWorkouts = workoutData.filter((w: Workout) => new Date(w.date).toISOString().split('T')[0] === date)
 
           const dayCalories = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.calories, 0)
           const dayProtein = dayNutrition.reduce((sum: number, n: Nutrition) => sum + n.protein, 0)
