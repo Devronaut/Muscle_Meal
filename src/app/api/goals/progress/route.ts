@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
-import { GoalProgress } from '@/types'
 
 export async function GET(request: Request) {
   try {
@@ -44,7 +43,7 @@ export async function GET(request: Request) {
     }
 
     // Calculate progress for each goal
-    const goalProgress: GoalProgress[] = goals.map(goal => {
+    const goalProgress = goals.map(goal => {
       const progress = {
         calories: goal.calories ? (current.calories / goal.calories) * 100 : 0,
         protein: goal.protein ? (current.protein / goal.protein) * 100 : 0,
