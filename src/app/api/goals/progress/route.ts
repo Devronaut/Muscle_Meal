@@ -42,8 +42,8 @@ export async function GET(request: Request) {
       }, 0),
     }
 
-    // Calculate progress for each goal - no explicit typing
-    const goalProgress = goals.map(goal => {
+    // Calculate progress for each goal
+    const result = goals.map(goal => {
       const progress = {
         calories: goal.calories ? (current.calories / goal.calories) * 100 : 0,
         protein: goal.protein ? (current.protein / goal.protein) * 100 : 0,
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
       }
     })
 
-    return NextResponse.json(goalProgress)
+    return NextResponse.json(result)
   } catch (error) {
     console.error('Error fetching goal progress:', error)
     return NextResponse.json({ message: 'Failed to fetch goal progress' }, { status: 500 })
