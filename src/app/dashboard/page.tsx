@@ -26,7 +26,7 @@ export default function DashboardPage() {
   }>>([])
   
   const [isLoading, setIsLoading] = useState(true)
-  const [goalProgress, setGoalProgress] = useState<GoalProgress[]>([])
+  const [goalProgress, setGoalProgress] = useState<any[]>([])
   const [analyticsInsights, setAnalyticsInsights] = useState<{
     achievements: number
     consistencyScore: number

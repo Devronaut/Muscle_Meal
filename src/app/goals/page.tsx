@@ -15,7 +15,7 @@ import { Goal, GoalProgress, CreateGoalData } from '@/types'
 
 export default function GoalsPage() {
   const [goals, setGoals] = useState<Goal[]>([])
-  const [goalProgress, setGoalProgress] = useState<GoalProgress[]>([])
+  const [goalProgress, setGoalProgress] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null)
