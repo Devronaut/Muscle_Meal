@@ -42,7 +42,7 @@ export async function GET(request: Request) {
       }, 0),
     }
 
-    // Calculate progress for each goal
+    // Calculate progress for each goal - no explicit typing
     const goalProgress = goals.map(goal => {
       const progress = {
         calories: goal.calories ? (current.calories / goal.calories) * 100 : 0,
