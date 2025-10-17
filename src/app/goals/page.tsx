@@ -224,7 +224,7 @@ export default function GoalsPage() {
                     value={formData.category}
                     onChange={(e) => setFormData(prev => ({ 
                       ...prev, 
-                      category: e.target.value as 'nutrition' | 'workout' 
+                      category: e.target.value 
                     }))}
                   >
                     <option value="nutrition">Nutrition</option>
@@ -379,7 +379,7 @@ export default function GoalsPage() {
                               value={formData.category}
                               onChange={(e) => setFormData(prev => ({ 
                                 ...prev, 
-                                category: e.target.value as 'nutrition' | 'workout' 
+                                category: e.target.value 
                               }))}
                             >
                               <option value="nutrition">Nutrition</option>
