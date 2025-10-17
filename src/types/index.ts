@@ -46,8 +46,8 @@ export interface WeeklyStats {
 export interface Goal {
   id: string
   name: string
-  type: 'daily' | 'weekly'
-  category: 'nutrition' | 'workout'
+  type: string
+  category: string
   calories?: number
   protein?: number
   carbs?: number
