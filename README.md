@@ -1,151 +1,232 @@
 # 💪 Muscle Meal
 
-A comprehensive personal fitness and nutrition tracking application built with Next.js, TypeScript, and Prisma.
+A comprehensive fitness and nutrition tracking application built with Next.js 14, Prisma, and PostgreSQL.
 
-## 🚀 Features
+## ✨ Features
 
-### 📊 Dashboard
-- Real-time daily nutrition and workout statistics
-- Goal progress tracking with visual indicators
-- Quick action buttons for logging workouts and nutrition
-- Recent activity feed
+- **Workout Tracking**: Log exercises, sets, reps, and weights
+- **Nutrition Tracking**: Track calories, protein, carbs, and fats
+- **Goal Setting**: Set and track daily nutrition goals
+- **Progress Analytics**: View detailed analytics and insights
+- **Performance Insights**: Get motivational messages based on progress
+- **History**: View past workouts and nutrition data
+- **Responsive Design**: Works on desktop and mobile devices
 
-### 🏋️ Workout Tracking
-- Log individual exercise sessions with multiple sets
-- Track reps, weight, and workout volume
-- Set-specific tracking for progressive overload
-- Workout history and progress visualization
+## 🚀 Quick Start
 
-### 🍎 Nutrition Logging
-- Daily food intake tracking
-- Macronutrient breakdown (calories, protein, carbs, fats)
-- Real-time nutrition totals
-- Food entry history
+### Development Setup
 
-### 📈 Progress Analytics
-- Weekly and monthly progress charts
-- Daily nutrition and workout volume trends
-- Performance insights and statistics
-- Visual data representation with Recharts
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd muscle-meal
+   ```
 
-### 📅 History
-- Weekly workout and nutrition logs
-- Expandable weekly cards with daily details
-- Historical data visualization
-- Progress tracking over time
+2. **Run the development setup script**
+   ```bash
+   ./scripts/setup-dev.sh
+   ```
 
-### 🎯 Goal Setting
-- Daily nutrition intake goals
-- Progress tracking with visual indicators
-- Goal management (create, edit, delete)
-- Achievement monitoring
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   - Visit [http://localhost:3000](http://localhost:3000)
+
+### Manual Setup
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+
+3. **Set up development database**
+   ```bash
+   npm run db:dev:generate
+   npm run db:dev:push
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+## 🗄️ Database Setup
+
+### Development (SQLite)
+- Uses local SQLite database
+- Schema: `prisma/schema.dev.prisma`
+- Commands: `npm run db:dev:*`
+
+### Production (PostgreSQL)
+- Uses Vercel Postgres
+- Schema: `prisma/schema.prisma`
+- Commands: `npm run db:*`
+
+## 📦 Available Scripts
+
+### Development
+- `npm run dev` - Start development server
+- `npm run db:dev:generate` - Generate Prisma client for development
+- `npm run db:dev:push` - Push schema to development database
+- `npm run db:dev:migrate` - Run migrations for development
+- `npm run db:dev:studio` - Open Prisma Studio for development
+
+### Production
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run db:generate` - Generate Prisma client for production
+- `npm run db:push` - Push schema to production database
+- `npm run db:migrate` - Run migrations for production
+- `npm run db:studio` - Open Prisma Studio for production
+
+## 🚀 Deployment
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Quick Deployment to Vercel
+
+1. **Create Vercel Postgres Database**
+   - Go to Vercel Dashboard → Your Project → Storage
+   - Create Postgres database (Hobby plan)
+
+2. **Set Environment Variables**
+   - Add `DATABASE_URL` and other Postgres variables
+   - Set for Production environment
+
+3. **Deploy**
+   ```bash
+   git push origin main
+   ```
+
+## 🏗️ Project Structure
+
+```
+muscle-meal/
+├── prisma/
+│   ├── schema.prisma          # Production schema (PostgreSQL)
+│   └── schema.dev.prisma      # Development schema (SQLite)
+├── src/
+│   ├── app/                   # Next.js app router
+│   │   ├── api/               # API routes
+│   │   ├── dashboard/         # Dashboard page
+│   │   ├── workouts/          # Workouts page
+│   │   ├── nutrition/         # Nutrition page
+│   │   ├── progress/          # Progress page
+│   │   ├── analytics/         # Analytics page
+│   │   ├── goals/             # Goals page
+│   │   └── history/           # History page
+│   ├── components/            # React components
+│   ├── lib/                   # Utility functions
+│   └── types/                 # TypeScript types
+├── scripts/
+│   └── setup-dev.sh          # Development setup script
+├── public/                    # Static assets
+└── DEPLOYMENT.md             # Deployment guide
+```
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14, React, TypeScript
-- **Styling**: Tailwind CSS, Headless UI
-- **Database**: SQLite with Prisma ORM
-- **Charts**: Recharts for data visualization
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: SQLite (dev), PostgreSQL (prod)
+- **Deployment**: Vercel
 - **Icons**: Heroicons
+- **Charts**: Recharts
 - **Date Handling**: date-fns
 
-## 🚀 Getting Started
+## 📱 Features Overview
 
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+### Dashboard
+- Today's workout and nutrition summary
+- Goal progress tracking
+- Performance insights with motivational messages
+- Quick actions for adding data
+- Recent activity feed
 
-### Installation
+### Workouts
+- Add workout sessions
+- Track exercises, sets, reps, and weights
+- Calculate workout volume
+- Edit and delete workouts
 
-1. Clone the repository:
-```bash
-git clone https://github.com/Devronaut/Muscle_Meal.git
-cd Muscle_Meal
+### Nutrition
+- Log daily food intake
+- Track calories, protein, carbs, and fats
+- Edit and delete nutrition entries
+
+### Goals
+- Set daily nutrition goals
+- Track progress towards goals
+- Edit and delete goals
+- Visual progress indicators
+
+### Analytics
+- Detailed performance analytics
+- Trend analysis
+- Achievement tracking
+- Personal records
+- Consistency scoring
+
+### Progress
+- Visual progress tracking
+- Workout volume trends
+- Nutrition trends over time
+
+### History
+- View past 12 weeks of data
+- Weekly summaries
+- Daily breakdowns
+
+## 🔧 Configuration
+
+### Environment Variables
+
+#### Development (.env.local)
+```
+DATABASE_URL="file:./dev.db"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-2. Install dependencies:
-```bash
-npm install
+#### Production (Vercel)
 ```
-
-3. Set up the database:
-```bash
-npm run db:generate
-npm run db:push
+DATABASE_URL="postgresql://..."
+POSTGRES_URL="postgresql://..."
+POSTGRES_PRISMA_URL="postgresql://...?pgbouncer=true&connect_timeout=15"
+POSTGRES_URL_NON_POOLING="postgresql://..."
+POSTGRES_USER="username"
+POSTGRES_HOST="host"
+POSTGRES_PASSWORD="password"
+POSTGRES_DATABASE="database"
 ```
-
-4. Start the development server:
-```bash
-npm run dev
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 📱 Usage
-
-1. **Dashboard**: View your daily progress and quick stats
-2. **Workouts**: Log your exercise sessions with sets, reps, and weights
-3. **Nutrition**: Track your daily food intake and macronutrients
-4. **Progress**: Analyze your fitness journey with charts and insights
-5. **History**: Review past weeks of workouts and nutrition
-6. **Goals**: Set and track your daily nutrition targets
-
-## 🗄️ Database Schema
-
-The application uses three main models:
-
-- **Workout**: Exercise sessions with sets data
-- **Nutrition**: Food entries with macronutrient information
-- **Goal**: User-defined daily targets
-
-## 📊 API Endpoints
-
-- `GET/POST /api/workouts` - Workout CRUD operations
-- `GET/POST /api/nutrition` - Nutrition CRUD operations
-- `GET/POST /api/goals` - Goal management
-- `GET /api/stats` - Daily statistics
-- `GET /api/goals/progress` - Goal progress tracking
-
-## 🎨 Design Features
-
-- **Consistent UI**: Gradient headers across all pages
-- **Responsive Design**: Mobile-first approach
-- **Modern Styling**: Clean, professional interface
-- **Interactive Elements**: Hover effects and smooth transitions
-- **Visual Feedback**: Progress bars and loading states
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run db:generate` - Generate Prisma client
-- `npm run db:push` - Push schema to database
-- `npm run db:studio` - Open Prisma Studio
-
-## 📈 Future Enhancements
-
-- [ ] Dark mode toggle
-- [x] Advanced analytics and insights ✅
-- [ ] Workout templates and exercise library
-- [ ] Food database integration
-- [ ] Mobile app (PWA)
-- [ ] Social features and sharing
-- [ ] Export data functionality
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
 
-## 👨‍💻 Author
+## 🆘 Support
 
-Created by [Devronaut](https://github.com/Devronaut)
+If you encounter any issues:
+1. Check the [DEPLOYMENT.md](./DEPLOYMENT.md) guide
+2. Review the troubleshooting section
+3. Check GitHub issues
+4. Contact support if needed
 
 ---
 
-**Muscle Meal** - Track your fitness journey, one meal and workout at a time! 💪🍽️
+**Built with ❤️ for fitness enthusiasts**

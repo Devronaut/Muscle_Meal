@@ -1,20 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Development schema for SQLite
+// This file is used for local development
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Workout {
   id           String   @id @default(cuid())
-  date         DateTime
   exerciseName String
-  sets         String   // JSON string of Array of {reps: number, weight: number}
+  date         DateTime
+  sets         Json
   notes        String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -25,7 +25,6 @@ model Workout {
 model Nutrition {
   id        String   @id @default(cuid())
   date      DateTime
-  foodName  String?  // Optional food/meal name
   calories  Int
   protein   Float
   carbs     Float
