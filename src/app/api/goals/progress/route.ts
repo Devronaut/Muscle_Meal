@@ -55,7 +55,11 @@ export async function GET(request: Request) {
       }
 
       return {
-        goal,
+        goal: {
+          ...goal,
+          type: goal.type as 'daily' | 'weekly',
+          category: goal.category as 'nutrition' | 'workout',
+        },
         current,
         progress,
       }
